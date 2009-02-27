@@ -150,6 +150,11 @@ If you use dmail in ~/.procmailrc, try:
 (defmacro prom-wl-plugged-p (folder)
   (` (elmo-folder-plugged-p (wl-folder-get-elmo-folder (, folder)))))
 
+(defsubst prom-wl-folder-type (folder)
+  (let ((type (elmo-folder-type folder)))
+    (unless (and type (string-match "^\\(.:\\)?/" folder))
+      type)))
+
 ;;; for wl-folder mode
 ;;;
 
@@ -353,10 +358,9 @@ If arg is non-nil, check unread folders."
 	 proc-log type prefix)
      (while log-list
        (setq proc-log (car log-list))
-       (setq type (elmo-folder-type proc-log))
+       (setq type (prom-wl-folder-type proc-log))
        (cond
-	((or (not type)		;; local logfile
-	     (string-match "^\\(.:\\)?/" proc-log))
+	((not type)		;; local logfile
 	 (when (file-exists-p proc-log)
 	   (goto-char (point-max))
 	   (as-binary-input-file (insert-file-contents proc-log))
@@ -551,7 +555,7 @@ If arg is non-nil, check unread folders."
 	      (catch 'exist
 		(while log-list
 		  (setq proc-log (car log-list))
-		  (setq type (elmo-folder-type proc-log))
+		  (setq type (prom-wl-folder-type proc-log))
 		  (cond ((not type) ;; local file
 			 (if (file-exists-p proc-log)
 			     (throw 'exist 'local)))
