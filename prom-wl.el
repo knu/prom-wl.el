@@ -138,17 +138,17 @@ If you use dmail in ~/.procmailrc, try:
   (concat "X-Prom-WL: " prom-wl-version " (procmail reader for Wanderlust)"))
 
 (defmacro prom-with-temp-buffer (&rest forms)
-  (` (let ((tmp-buf (get-buffer-create prom-buffer-tmp)))
-       (unwind-protect
-	   (save-excursion
-	     (set-buffer tmp-buf)
-	     (erase-buffer)
-	     (,@ forms))
-	 (and (get-buffer tmp-buf)
-	      (kill-buffer tmp-buf))))))
+  `(let ((tmp-buf (get-buffer-create prom-buffer-tmp)))
+     (unwind-protect
+         (save-excursion
+           (set-buffer tmp-buf)
+           (erase-buffer)
+           ,@forms)
+       (and (get-buffer tmp-buf)
+            (kill-buffer tmp-buf)))))
 
 (defmacro prom-wl-plugged-p (folder)
-  (` (elmo-folder-plugged-p (wl-folder-get-elmo-folder (, folder)))))
+  `(elmo-folder-plugged-p (wl-folder-get-elmo-folder ,folder)))
 
 (defsubst prom-wl-folder-type (folder)
   (let ((type (elmo-folder-type folder)))
@@ -159,10 +159,10 @@ If you use dmail in ~/.procmailrc, try:
 ;;;
 
 (defmacro prom-wl-folder-unread-regex (group)
-  (` (format "^[ ]*%s+:[0-9\\*-]+/[^0\\*][0-9]*/[0-9\\*-]+$"
-	     (if (, group)
-		 "."
-	       "[^[:]"))))
+  `(format "^[ ]*%s+:[0-9\\*-]+/[^0\\*][0-9]*/[0-9\\*-]+$"
+           (if ,group
+               "."
+             "[^[:]")))
 
 (defun prom-wl-folder-next-unread (&optional nogroup)
   "move cursor to the next unread folder."
@@ -267,9 +267,9 @@ If you use dmail in ~/.procmailrc, try:
       (set-window-configuration prom-wl-previous-window-config)))
 
 (defmacro prom-call-optional-method (lock-mode)
-  (` (if (eq (, lock-mode) prom-wl-lock-optional-method)
-	 (and prom-wl-get-new-mail-optional-method
-	      (funcall prom-wl-get-new-mail-optional-method arg)))))
+  `(if (eq ,lock-mode prom-wl-lock-optional-method)
+       (and prom-wl-get-new-mail-optional-method
+            (funcall prom-wl-get-new-mail-optional-method arg))))
 
 (defun prom-wl-check-new-mail (&optional arg)
   "Check New mail, from procmail log files.
@@ -405,7 +405,7 @@ If arg is non-nil, check unread folders."
 (defvar prom-wl-dummy-from "From ????(added-automatically-by-Prom-WL)")
 
 (defmacro prom-wl-imap4-log2tmp (log)
-  (` (format "%s.prom-wl" (, log))))
+  `(format "%s.prom-wl" ,log))
 
 ;; for old elmo-imap4.el
 
