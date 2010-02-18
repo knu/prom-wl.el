@@ -82,7 +82,11 @@ If you use dmail in ~/.procmailrc, try:
     (nil   . "+"))	;; local file
   "*Prefix of checking folder.")
 
-(defvar prom-wl-ignore-folder "^\\+\\(draft\\|trash\\|outbox\\)$")
+(defvar prom-wl-ignore-folder "^\\+\\(draft\\|trash\\|outbox\\)$"
+  "*Skip folders that match this regexp, on prom-wl-folder-next-unread.")
+
+(defvar prom-wl-omit-folder nil
+  "*If non-nil, omit check for folders that match this regexp.")
 
 (defvar prom-wl-xheader nil)
 
@@ -539,7 +543,10 @@ If arg is non-nil, check unread folders."
 	(prom-wl-add-check-entity-list folder)))))
 
 (defun prom-wl-add-check-entity-list (folder)
-  (if (not (member folder prom-check-entity-list))
+  (if (not (or
+            (member folder prom-check-entity-list)
+            (and prom-wl-omit-folder
+                 (string-match prom-wl-omit-folder folder))))
       (wl-append prom-check-entity-list (list folder))))
 
 ;;; lock
