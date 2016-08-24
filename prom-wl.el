@@ -626,3 +626,5 @@ If arg is non-nil, check unread folders."
 ;;; mode: outline-minor
 ;;; outline-regexp: ";;; @+\\|(......"
 ;;; End:
+
+;;; prom-wl.el ends here
