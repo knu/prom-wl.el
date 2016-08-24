@@ -252,6 +252,7 @@ If you use dmail in ~/.procmailrc, try:
 
     (setq prom-wl-init t)))
 
+;;;###autoload
 (defun prom-wl (&optional arg)
   (interactive "P")
   (if (not (memq major-mode '(wl-folder-mode wl-summary-mode)))
