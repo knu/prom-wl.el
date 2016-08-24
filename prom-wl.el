@@ -1,17 +1,26 @@
-;;; -*- Emacs-Lisp -*-
-;;; procmail reader for Wanderlust on Emacsen.
-;;; $Id: prom-wl.el,v 2.28.2.5 2001/09/08 08:09:46 murata Exp $
-;;; by Masahiro MURATA <muse@ba2.so-net.ne.jp>
+;;; prom-wl.el --- procmail log reader for Wanderlust
+;;
+;; This fork is based on the revision <$Id: prom-wl.el,v 2.28.2.5 2001/09/08 08:09:46 murata Exp $>,
+;; taken from <http://www.h6.dion.ne.jp/~nytheta/software/prom-wl.html>.
+
+;; Authors: Masahiro MURATA <muse@ba2.so-net.ne.jp>,
+;;          Akinori MUSHA <knu@iDaemons.org>
+;; URL: https://github.com/knu/prom-wl.el
+;; Created: 8 Sep 2001
+;; Version: 2.7.0
+;; Package-Requires: ((wanderlust "2.7.0"))
+;; Keywords: mail
+
+;;; Commentary:
+
+;; This is a procmail log reader for Wanderlust.
+;;
+;; See <http://www.h6.dion.ne.jp/~nytheta/software/prom-wl.html> for
+;; the original version and details.
+
+;;; Code:
 
 (defconst prom-wl-version "Prom-WL 2.7.0")
-
-;; !!! this version is required Wanderlust 2.7.0 or later!!!
-
-;;; @ Document
-;;; 
-
-;;; @ require
-;;;
 
 (require 'wl)
 (eval-when-compile
